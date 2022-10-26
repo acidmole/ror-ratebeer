@@ -1,10 +1,11 @@
-<h2>List of ratings</h2>
+<%= link_to 'Make a new rating', new_rating_path %>
 
+<h2>List of ratings</h2>
 
 <div id="ratings">
     <ul>
         <% @ratings.each do |rating| %>
-            <li> <%= "#{rating.beer.name} #{rating.score}" %> </li>
-         <% end %>
+            <li> <%= rating.to_s %> <%= button_to 'delete', rating, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } } %> </li>
+        <% end %>
     </ul>
 </div>
