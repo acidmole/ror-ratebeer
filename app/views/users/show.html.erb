@@ -1,0 +1,30 @@
+<p style="color: green"><%= notice %></p>
+
+<h2>Username:</h2>
+
+<p> 
+  <%= @user.username %>
+</p>
+
+<p>
+  has made
+  <%= @user.ratings.count %>
+  <%= "rating".pluralize(@user.ratings.count) %>
+  , average rating
+  <%= @user.average_rating %>
+</p>
+
+<p>
+  <ul>
+    <% @user.ratings.each do |rating| %>
+      <li> <%= rating.to_s %> <%= link_to 'delete', rating, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %> </li>
+    <% end %>
+  </ul>
+</p>
+
+<div>
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>
