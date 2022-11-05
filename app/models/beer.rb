@@ -7,7 +7,6 @@ class Beer < ApplicationRecord
 
   validates :name, presence: true
 
-
   def average
     return 0 if ratings.empty?
 

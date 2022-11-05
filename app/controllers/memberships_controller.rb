@@ -1,0 +1,23 @@
+class MembershipsController < ApplicationController
+  def new
+    @beer_clubs = BeerClub.all
+    @membership = Membership.new
+  end
+
+  def create
+    @membership = Membership.new params.require(:membership).permit(:beer_club_id, :user_id)
+    @membership.user = current_user
+
+    if @membership.save
+      redirect_to beer_clubs_path
+    else
+      @beer_clubs = BeerClub.all
+      @membership = Membership.new
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def membership_params
+    params.require(:beer_club_id).permit(:user_id)
+  end
+end

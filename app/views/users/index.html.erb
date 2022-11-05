@@ -5,6 +5,15 @@
 <div id="users">
   <% @users.each do |user| %>
     <%= render user %>
+    
+    <strong>Member of:</strong>
+
+    <% user.beer_clubs.each do |beer_club| %>
+      <ul>
+        <li><%= beer_club.name %></li>
+      </ul>
+    <% end %>
+    
     <p>
       <%= link_to "Show this user", user %>
     </p>
