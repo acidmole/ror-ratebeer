@@ -25,10 +25,8 @@ class User < ApplicationRecord
     return nil if ratings.empty?
     Rating.connection.select_all("SELECT AVG(ratings.score), beers.style 
     FROM ratings 
-    LEFT JOIN beers ON beers.id = ratings.beer_id 
-    LEFT JOIN users on users.id = ratings.user_id 
-    WHERE users.id = #{id}
-    GROUP BY beers.style
+    LEFT JOIN beers ON beers.id = ratings.beer_id LEFT JOIN users ON users.id = ratings.user_id WHERE users.id = #{id}
+    GROUP BY beers.style, ratings.score
     ORDER BY ratings.score DESC")[0]["style"]
   end
 end

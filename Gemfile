@@ -11,7 +11,7 @@ gem "rails", "~> 7.0.4"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-#sqlite in use in test env
+#psql in use in test env
 group :development, :test do
   gem 'sqlite3'
 end
