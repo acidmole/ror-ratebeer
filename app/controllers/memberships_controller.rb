@@ -1,6 +1,7 @@
 class MembershipsController < ApplicationController
   def new
-    @beer_clubs = BeerClub.all
+    memberships_of_current = current_user.memberships.map(&:beer_club)
+    @beer_clubs = BeerClub.where.not(id: memberships_of_current)
     @membership = Membership.new
   end
 
@@ -15,9 +16,5 @@ class MembershipsController < ApplicationController
       @membership = Membership.new
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def membership_params
-    params.require(:beer_club_id).permit(:user_id)
   end
 end

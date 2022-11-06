@@ -14,4 +14,21 @@ class User < ApplicationRecord
   def average_rating
     rating_average(self)
   end
+
+  def favorite_beer
+    return nil if ratings.empty?   # palautetaan nil jos reittauksia ei ole
+
+    ratings.order(score: :desc).limit(1).first.beer
+  end
+
+  def favorite_style
+    return nil if ratings.empty?
+    Rating.connection.select_all("SELECT AVG(ratings.score), beers.style 
+    FROM ratings 
+    LEFT JOIN beers ON beers.id = ratings.beer_id 
+    LEFT JOIN users on users.id = ratings.user_id 
+    WHERE users.id = #{id}
+    GROUP BY beers.style
+    ORDER BY ratings.score DESC")[0]["style"]
+  end
 end

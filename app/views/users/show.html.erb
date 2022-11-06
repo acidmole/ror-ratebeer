@@ -15,6 +15,11 @@
 </p>
 
 <p>
+  Favorite style: 
+  <%= @user.favorite_style %>
+</p>
+
+<p>
   <ul>
     <% @user.ratings.each do |rating| %>
       <li><%= "#{rating.to_s}" %>
