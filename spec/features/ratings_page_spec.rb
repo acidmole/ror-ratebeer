@@ -66,8 +66,9 @@ describe "Rating" do
     end
 
     it "is deleted when clicked" do
-
-      page.find_all('a[href="/ratings/1"]')[0].click
+      save_and_open_page
+      binding.pry
+      page.find_all('a', text: "Delete")[0].click
       expect(page).not_to have_content 'Kalex'
       expect(page).to have_content 'Bisse'
     end
