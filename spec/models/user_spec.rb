@@ -98,10 +98,10 @@ RSpec.describe User, type: :model do
       beer1 = FactoryBot.create(:beer, style: "Porter")
       beer2 = FactoryBot.create(:beer, style: "Lager")
       beer3 = FactoryBot.create(:beer, style: "Lager")
-      rating1 = FactoryBot.create(:rating, score: 20, beer: beer1, user: user)
+      rating1 = FactoryBot.create(:rating, score: 24, beer: beer1, user: user)
       rating2 = FactoryBot.create(:rating, score: 25, beer: beer2, user: user)
       rating3 = FactoryBot.create(:rating, score: 17, beer: beer3, user: user)
-      expect(user.favorite_style).to eq("Lager")
+      expect(user.favorite_style).to eq(beer1.style)
     end
   end
 
@@ -115,8 +115,17 @@ RSpec.describe User, type: :model do
     it "without ratings does not have one" do
       expect(user.favorite_brewery).to eq(nil)
     end
-
-
+    it "is the one with highest average rating if several rated" do
+      brewery1 = FactoryBot.create(:brewery, name: "Heineken")
+      brewery2 = FactoryBot.create(:brewery, name: "Carlsberg")
+      beer1 = FactoryBot.create(:beer, brewery: brewery1)
+      beer2 = FactoryBot.create(:beer, brewery: brewery2)
+      beer3 = FactoryBot.create(:beer, brewery: brewery2)
+      rating1 = FactoryBot.create(:rating, score: 32, beer: beer1, user: user)
+      rating2 = FactoryBot.create(:rating, score: 40, beer: beer2, user: user)
+      rating3 = FactoryBot.create(:rating, score: 15, beer: beer3, user: user)
+      expect(user.favorite_brewery).to eq(brewery1.name)
+    end
   end
 
 end
