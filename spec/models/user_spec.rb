@@ -100,9 +100,23 @@ RSpec.describe User, type: :model do
       beer3 = FactoryBot.create(:beer, style: "Lager")
       rating1 = FactoryBot.create(:rating, score: 20, beer: beer1, user: user)
       rating2 = FactoryBot.create(:rating, score: 25, beer: beer2, user: user)
-      rating3 = FactoryBot.create(:rating, score: 42, beer: beer2, user: user)
-      rating4 = FactoryBot.create(:rating, score: 16, beer: beer2, user: user)
-      expect(user.favorite_style).to eq(beer2.style)
+      rating3 = FactoryBot.create(:rating, score: 17, beer: beer3, user: user)
+      expect(user.favorite_style).to eq("Lager")
     end
   end
+
+  describe "favorite brewery" do
+    let(:user){ FactoryBot.create(:user) }
+
+    it "has method for determining one" do
+      expect(user).to respond_to(:favorite_brewery)
+    end
+
+    it "without ratings does not have one" do
+      expect(user.favorite_brewery).to eq(nil)
+    end
+
+
+  end
+
 end

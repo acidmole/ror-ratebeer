@@ -20,6 +20,11 @@
 </p>
 
 <p>
+  Favorite brewery: 
+  <%= @user.favorite_brewery %>
+</p>
+
+<p>
   <ul>
     <% @user.ratings.each do |rating| %>
       <li><%= "#{rating.to_s}" %>
