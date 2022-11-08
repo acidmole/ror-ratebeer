@@ -26,9 +26,8 @@ class User < ApplicationRecord
     Rating.connection.select_all("SELECT AVG(ratings.score), beers.style 
     FROM ratings 
     LEFT JOIN beers ON beers.id = ratings.beer_id
-    LEFT JOIN users ON users.id = ratings.user_id 
-    WHERE users.id = #{id}
-    GROUP BY beers.style, ratings.score
+    WHERE ratings.user_id = #{id}
+    GROUP BY beers.style
     ORDER BY AVG(ratings.score) DESC")[0]["style"]
   end
 
@@ -39,8 +38,7 @@ class User < ApplicationRecord
     FROM ratings
     LEFT JOIN beers ON beers.id = ratings.beer_id
     LEFT JOIN breweries ON breweries.id = beers.brewery_id
-    LEFT JOIN users ON users.id = ratings.user_id 
-    WHERE users.id = #{id}
+    WHERE ratings.user_id = #{id}
     GROUP BY breweries.name
     ORDER BY AVG(ratings.score) DESC")[0]["name"]
   end
