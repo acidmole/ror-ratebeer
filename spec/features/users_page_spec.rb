@@ -33,38 +33,4 @@ describe "User" do
         }.to change{User.count}.by(1)
     end
   end
-
-
-  describe "has ratings" do
-    before :each do
-      sign_in(username: "Pekka", password: "Foobar1")
-      FactoryBot.create(:beer, name: "Kalex")
-      FactoryBot.create(:beer, name: "Bisse")
-      visit new_rating_path
-      select('Kalex', from: 'rating[beer_id]')
-      fill_in('rating[score]', with: '45')
-      click_button "Create Rating"
-      visit new_rating_path
-      select('Bisse', from: 'rating[beer_id]')
-      fill_in('rating[score]', with: '12')
-      click_button "Create Rating"
-    end
-      
-    it "shown on user page" do
-      user2 = FactoryBot.create(:user, username: "Antti", password: "Foobar2", password_confirmation: "Foobar2")
-
-      expect(page).to have_content 'Kalex'
-      click_link "Sign out"
-
-      sign_in(username: "Antti", password: "Foobar2")
-      expect(page).not_to have_content 'Kalex'
-    end
-
-    it "deleted when clicked" do
-
-      page.find_all('a[href="/ratings/1"]')[0].click
-      expect(page).not_to have_content 'Kalex'
-      expect(page).to have_content 'Bisse'
-    end
-  end
 end

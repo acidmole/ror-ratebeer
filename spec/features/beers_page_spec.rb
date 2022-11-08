@@ -12,6 +12,7 @@ describe "Beer" do
     before :each do
         visit new_beer_path
     end
+
     it "is accepted if it has a name" do
         fill_in('beer[name]', with: 'Kalex')
         select('Porter', from: 'beer[style]')
@@ -20,6 +21,7 @@ describe "Beer" do
             click_button('Create Beer')
           }.to change{Beer.count}.by(1)
     end
+    
     it "is not accepted if it has no name" do
         click_button('Create Beer')
             
