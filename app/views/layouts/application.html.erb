@@ -15,10 +15,9 @@
       <%= link_to 'breweries', breweries_path %>
       <%= link_to 'beers', beers_path %>
       <%= link_to 'ratings', ratings_path %>
+      <%= link_to 'clubs', beer_clubs_path %>
 
-      <% if current_user %>
-        <%= link_to 'users', users_path %>
-        <%= link_to 'clubs', beer_clubs_path %>
+      <% if current_user %>  <%= link_to 'users', users_path %>
         |
         <%= link_to current_user.username, user_path(current_user) %>
         <%= link_to 'Rate a new beer', new_rating_path %>
