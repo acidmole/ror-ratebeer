@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
   resources :beer_clubs
-  resources :memberships, only: [:index, :create]
+  resources :memberships, only: [:index, :create, :delete]
   resources :users
   resources :beers
   resources :breweries
   resources :ratings, only: [:index, :new, :create, :destroy]
   resources :places, only: [:index, :show]
   resource :session, only: [:new, :create, :destroy]
+  resource :membership, only: [:delete]
+  resources :styles
 
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -23,4 +25,5 @@ Rails.application.routes.draw do
   post 'membership', to: 'memberships#create'
   get 'places', to: 'places#index'
   post 'places', to: 'places#search'
+  delete 'membership', to: 'memberships#destroy'
 end
