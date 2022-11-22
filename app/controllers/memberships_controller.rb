@@ -26,5 +26,4 @@ class MembershipsController < ApplicationController
     @membership.destroy
     redirect_to user_url(current_user), notice: "Membership with #{@membership.beer_club.name} ended."
   end
-
 end
