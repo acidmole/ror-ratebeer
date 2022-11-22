@@ -8,6 +8,13 @@
 <% end %>
 
 <% if @places %>
+  
+  <h3>Current Weather in <%= @places.first.city %></h3>
+  <img src= <%= @weather.weather_icons[0] %>>
+  <p>
+    It's <%= @weather.weather_descriptions[0] %>. The temperature is <%= @weather.temperature %> celsius with wind gusting at a speed of <%= @weather.wind_speed %> from <%= @weather.wind_dir %>.
+  </p>
+
   <table>
     <thead>
       <% Place.rendered_fields.each do |field| %>
