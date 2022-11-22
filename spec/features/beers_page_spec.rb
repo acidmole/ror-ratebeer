@@ -5,6 +5,7 @@ describe "Beer" do
   before :each do
     @user1 = FactoryBot.create :user
     @brewery1 = FactoryBot.create :brewery
+    @style1 = FactoryBot.create :style
     sign_in(username: "Pekka", password: "Foobar1")
   end
 
@@ -15,7 +16,7 @@ describe "Beer" do
 
     it "is accepted if it has a name" do
         fill_in('beer[name]', with: 'Kalex')
-        select('Porter', from: 'beer[style]')
+        select('Lager', from: 'beer[style_id]')
         select('anonymous', from: 'beer[brewery_id]')
         expect{
             click_button('Create Beer')

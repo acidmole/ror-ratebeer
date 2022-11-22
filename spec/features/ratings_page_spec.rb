@@ -7,6 +7,10 @@ describe "Rating" do
   let!(:beer1) { FactoryBot.create :beer, name: "iso 3", brewery:brewery }
   let!(:beer2) { FactoryBot.create :beer, name: "Karhu", brewery:brewery }
   let!(:user) { FactoryBot.create :user }
+  let!(:style1) { FactoryBot.create :style } #lager
+  let!(:style2) { FactoryBot.create :style, name: "Porter" }
+  let!(:style3) { FactoryBot.create :style, name: "Pale ale" }
+  
 
   before :each do
     sign_in(username: "Pekka", password: "Foobar1")
@@ -32,10 +36,10 @@ describe "Rating" do
       brewery1 = FactoryBot.create(:brewery, name: "Iisalamen panimo")
       brewery2 = FactoryBot.create(:brewery, name: "Kuopijon panimo")
       brewery3 = FactoryBot.create(:brewery, name: "Suomussalamen panimo")
-      FactoryBot.create(:beer, name: "Kalex", style: "Lager", brewery: brewery1)
-      FactoryBot.create(:beer, name: "Bisse", style: "Porter", brewery: brewery2)
-      FactoryBot.create(:beer, name: "Stobe", style: "Pale ale", brewery: brewery2)
-      FactoryBot.create(:beer, name: "Kolmonen", style: "Lager", brewery: brewery3)
+      FactoryBot.create(:beer, name: "Kalex", style: style1, brewery: brewery1)
+      FactoryBot.create(:beer, name: "Bisse", style: style2, brewery: brewery2)
+      FactoryBot.create(:beer, name: "Stobe", style: style3, brewery: brewery2)
+      FactoryBot.create(:beer, name: "Kolmonen", style: style1, brewery: brewery3)
       visit new_rating_path
       select('Kalex', from: 'rating[beer_id]')
       fill_in('rating[score]', with: '18')

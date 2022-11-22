@@ -24,12 +24,13 @@ class User < ApplicationRecord
   def favorite_style
     return nil if ratings.empty?
 
-    Rating.connection.select_all("SELECT AVG(ratings.score), beers.style
+    Rating.connection.select_all("SELECT AVG(ratings.score), styles.name
     FROM ratings
     LEFT JOIN beers ON beers.id = ratings.beer_id
+    LEFT JOIN styles ON styles.id = beers.style_id
     WHERE ratings.user_id = #{id}
-    GROUP BY beers.style
-    ORDER BY AVG(ratings.score) DESC")[0]["style"]
+    GROUP BY styles.name
+    ORDER BY AVG(ratings.score) DESC")[0]["name"]
   end
 
   def favorite_brewery
