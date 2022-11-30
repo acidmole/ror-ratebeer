@@ -9,7 +9,7 @@ class Brewery < ApplicationRecord
   validate :year_cannot_be_in_the_future
 
   scope :active, -> { where active: true }
-  scope :retired, -> { where active: [nil,false] }
+  scope :retired, -> { where active: [nil, false] }
 
   def average_rating
     rating_average(self)
@@ -21,7 +21,7 @@ class Brewery < ApplicationRecord
     errors.add(:year, "can't be in the future")
   end
 
-  def self.top(n)
-    sorted_by_rating_in_desc_order = Brewery.all.sort_by { |b| b.average_rating }.reverse.take(n)
+  def self.top(amount)
+    Brewery.all.sort_by(&:average_rating).reverse.take(amount)
   end
 end

@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       if user.active
         session[:user_id] = user.id
         redirect_to user_path(user), notice: "Welcome back!"
-      else 
+      else
         redirect_to signin_path, notice: "Account closed, please contact admin"
       end
     else

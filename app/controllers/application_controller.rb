@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   include ActionView::Helpers::NumberHelper
 
   helper_method :current_user
@@ -16,8 +15,8 @@ class ApplicationController < ActionController::Base
     if current_user
       return User.find(session[:user_id]).admin?
     end
-    
-    return false
+
+    false
   end
 
   def ensure_that_signed_in
