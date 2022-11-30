@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_admin?
-    User.find(session[:user_id]).admin?
+    if current_user
+      return User.find(session[:user_id]).admin?
+    end
+    
+    return false
   end
 
   def ensure_that_signed_in

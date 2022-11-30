@@ -48,5 +48,4 @@ class User < ApplicationRecord
   def self.most_active(n)
     sorted_by_rating_count_in_desc_order = User.all.sort_by { |u| u.ratings.count }.reverse.take(n)
   end
-
 end

@@ -18,5 +18,4 @@
 <div>
   <%= link_to 'Back to breweries', breweries_path, class:'btn btn-info' %>
   <%= edit_and_destroy_buttons(@brewery) %>
-   <%= button_to "Destroy this brewery", @brewery, method: :delete if current_user %>
 </div>
