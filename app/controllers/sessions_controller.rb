@@ -7,8 +7,12 @@ class SessionsController < ApplicationController
     user = User.find_by username: params[:username]
     # tarkastetaan että käyttäjä olemassa, ja että salasana on oikea
     if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to user_path(user), notice: "Welcome back!"
+      if user.active
+        session[:user_id] = user.id
+        redirect_to user_path(user), notice: "Welcome back!"
+      else 
+        redirect_to signin_path, notice: "Account closed, please contact admin"
+      end
     else
       redirect_to signin_path, notice: "Username and/or password mismatch"
     end

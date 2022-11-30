@@ -6,6 +6,13 @@
   <%= @user.username %>
 </p>
 
+  <p style="color: red">
+    <% if !@user.active %>
+      account closed
+    <% end %>
+  </p>
+
+
 <p>
   has made
   <%= @user.ratings.count %>
@@ -23,6 +30,14 @@
   Favorite brewery: 
   <%= @user.favorite_brewery %>
 </p>
+
+<% if logged_admin? %>
+  <% if @user.active %>
+    <%= link_to "close account", toggle_account_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-danger" %>  
+  <% else %>
+    <%= link_to "open account", toggle_account_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-danger" %>
+  <% end %>
+<% end %>
 
 <p>
   <ul>

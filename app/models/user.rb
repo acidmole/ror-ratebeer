@@ -44,4 +44,9 @@ class User < ApplicationRecord
     GROUP BY breweries.name
     ORDER BY AVG(ratings.score) DESC")[0]["name"]
   end
+
+  def self.most_active(n)
+    sorted_by_rating_count_in_desc_order = User.all.sort_by { |u| u.ratings.count }.reverse.take(n)
+  end
+
 end

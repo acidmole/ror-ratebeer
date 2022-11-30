@@ -5,6 +5,12 @@
 <div id="users">
   <% @users.each do |user| %>
     <%= render user %>
+
+    <p style="color: red">
+      <% if !user.active %>
+        account closed
+      <% end %>
+    </p>
     
     <strong>Member of:</strong>
 
@@ -17,6 +23,7 @@
     <p>
       <%= link_to "Show this user", user %>
     </p>
+  <hr>
   <% end %>
 </div>
 

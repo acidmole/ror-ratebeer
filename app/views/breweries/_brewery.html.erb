@@ -1,7 +1,10 @@
 <div id="<%= dom_id brewery %>">
-  <h2>
-    <%= brewery.name %>
-  </h2>
+ <h2>
+  <%= link_to brewery.name, brewery_path(brewery) %>
+  <% if not brewery.active  %>
+    <span class="badge bg-secondary">retired</span>
+  <% end %>
+</h2>
 
 <p>
   <i>

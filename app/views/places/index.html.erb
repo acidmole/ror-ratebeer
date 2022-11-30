@@ -1,10 +1,12 @@
 <h1>Beer places search</h1>
 
-<p id="notice"><%= notice %></p>
+
 
 <%= form_with url: places_path, method: :post do |form| %>
-  city <%= form.text_field :city %>
-  <%= form.submit "Search" %>
+  <div class="mb-3">
+    City <%= form.text_field :city, { class: "form-label"} %>
+    <%= form.submit "Search", { class: "btn btn-primary" } %>
+  </div>
 <% end %>
 
 <% if @places %>
@@ -12,15 +14,18 @@
   <h3>Current Weather in <%= @places.first.city %></h3>
   <img src= <%= @weather.weather_icons[0] %>>
   <p>
-    It's <%= @weather.weather_descriptions[0] %>. The temperature is <%= @weather.temperature %> celsius with wind gusting at a speed of <%= @weather.wind_speed %> from <%= @weather.wind_dir %>.
+    <%= @weather.weather_descriptions[0] %> in <%= @places.first.city %> at the moment. The temperature is <%= @weather.temperature %> degrees celsius with wind gusting at a speed of <%= @weather.wind_speed %> from <%= @weather.wind_dir %>.
   </p>
 
-  <table>
-    <thead>
-      <% Place.rendered_fields.each do |field| %>
-        <th><%= field %></th>
-      <% end %>
+  <table class="table">
+    <thead class="thead dark">
+      <tr>
+        <% Place.rendered_fields.each do |field| %>
+          <th scope="col"><%= field %></th>
+        <% end %>
+      </tr>
     </thead>
+    <tbody>
     <% @places.each do |place| %>
       <tr>
         <% Place.rendered_fields.each do |field| %>
@@ -33,6 +38,7 @@
           </td>
         <% end %>
       </tr>
+    </tbody>
     <% end %>
   </table>
 <% end %>

@@ -2,12 +2,23 @@
 
 <h1>Beers</h1>
 
-<div id="beers">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Beer</th>
+      <th scope="col">Style</th>
+      <th scope="col">Brewery</th>
+      <th scope="col">Rating</th>
+    </tr>
   <% @beers.each do |beer| %>
-    <hr>
-    <%= render beer %>
+    <tr>
+      <td><%= link_to(beer.name, beer_path(beer)) %></td>
+      <td><%= link_to(beer.style.name, style_path(beer.style)) %></td>
+      <td><%= link_to(beer.brewery.name, brewery_path(beer.brewery)) %></td>
+      <td><%= beer.average_rating %></td>
+    </tr>
   <% end %>
-  
-</div>
+</table>
+
 <%= link_to 'list of breweries', breweries_path %>
 <%= link_to('New Beer', new_beer_path) if current_user %>

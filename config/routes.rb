@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   resource :membership, only: [:delete]
   resources :styles
-
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
+  resources :users do
+    post 'toggle_account', on: :member
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

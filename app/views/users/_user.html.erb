@@ -4,4 +4,10 @@
     <%= user.username %>
   </p>
 
+  <p>
+    <% if user.active %>
+      <span class="badge badge-warning">account closed</span>
+    <% end %>
+  </p>
+
 </div>
