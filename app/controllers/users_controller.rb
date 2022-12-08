@@ -51,8 +51,7 @@ class UsersController < ApplicationController
   def destroy
     user = User.find params[:id]
 
-    if user == current_user
-      session.destroy
+    if logged_admin?
       user.destroy
     end
 

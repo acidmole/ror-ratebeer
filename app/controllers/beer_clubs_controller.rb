@@ -5,6 +5,14 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs or /beer_clubs.json
   def index
     @beer_clubs = BeerClub.all
+
+    order = params[:order] || 'name'
+
+    @beer_clubs = case order
+                  when "name" then @beer_clubs.sort_by(&:name)
+                  when "founded" then @beer_clubs.sort_by(&:founded)
+                  when "city" then @beer_clubs.sort_by(&:city)
+                  end
   end
 
   # GET /beer_clubs/1 or /beer_clubs/1.json
@@ -29,6 +37,8 @@ class BeerClubsController < ApplicationController
 
     respond_to do |format|
       if @beer_club.save
+
+        Membership.create(beer_club_id: @beer_club.id, user_id: current_user.id, confirmed: true)
         format.html { redirect_to beer_club_url(@beer_club), notice: "Beer club was successfully created." }
         format.json { render :show, status: :created, location: @beer_club }
       else

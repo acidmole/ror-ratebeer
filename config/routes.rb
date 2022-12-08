@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :users do
     post 'toggle_account', on: :member
   end
+  resources :memberships do
+    post 'confirm', on: :member
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -31,4 +34,5 @@ Rails.application.routes.draw do
   get 'places', to: 'places#index'
   post 'places', to: 'places#search'
   delete 'membership', to: 'memberships#destroy'
+  get 'beerlist', to:'beers#list'
 end

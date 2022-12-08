@@ -13,7 +13,7 @@ class MembershipsController < ApplicationController
     @beer_club = @membership.beer_club
 
     if @membership.save
-      redirect_to beer_club_url(@beer_club), notice: "Welcome to the club, #{current_user.username}!"
+      redirect_to beer_club_url(@beer_club), notice: "Your membership application is being handled. Please wait."
     else
       @beer_clubs = BeerClub.all
       @membership = Membership.new
@@ -25,5 +25,16 @@ class MembershipsController < ApplicationController
     @membership = Membership.find_by(beer_club_id: params[:beer_club_id], user_id: params[:user_id])
     @membership.destroy
     redirect_to user_url(current_user), notice: "Membership with #{@membership.beer_club.name} ended."
+  end
+
+  def confirm
+    membership = Membership.find(params[:id])
+    membership.update_attribute :confirmed, true
+
+    redirect_to beer_club_url(membership.beer_club), notice: "Membership for #{membership.user.username} confirmed."
+  end
+
+  def membership_params
+    params.require(:membership).permit(:id)
   end
 end

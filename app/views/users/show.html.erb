@@ -31,6 +31,26 @@
   <%= @user.favorite_brewery %>
 </p>
 
+<h2>Member of:</h2>
+<ul>
+  <% @user.memberships.where(confirmed: true).each do |membership| %>
+    <li><%= membership.beer_club.name %></li>
+  <% end %>
+</ul>
+
+
+
+<% if !@user.memberships.where(confirmed: false).empty? %>
+<h2>Applied membership for:</h2>
+  <ul>
+    <% @user.memberships.where(confirmed: false).each do |membership| %>
+      <li><%= membership.beer_club.name %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<hr>
+
 <% if logged_admin? %>
   <% if @user.active %>
     <%= link_to "close account", toggle_account_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-danger" %>  
@@ -39,6 +59,7 @@
   <% end %>
 <% end %>
 
+<h2>Given ratings</h2>
 <p>
   <ul>
     <% @user.ratings.each do |rating| %>
@@ -51,14 +72,6 @@
   </ul>
 </p>
 
-<div>
-  <% if @user == current_user %>
-    <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <% end %>
-
-  <%= link_to "Back to users", users_path %>
-
-  <% if @user == current_user %>
-    <%= button_to "Destroy this user", @user, method: :delete %>
-  <% end %>
-</div>
+  <div>
+    <%= edit_and_destroy_buttons(@user) %>
+  </div>
