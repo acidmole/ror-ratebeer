@@ -4,20 +4,25 @@ Rails.application.routes.draw do
   resources :users
   resources :beers
   resources :breweries
-  resources :ratings, only: [:index, :new, :create, :destroy]
+  resources :ratings, only: [:index, :new, :create, :show]
+  delete 'ratings', to: 'ratings#destroy'
   resources :places, only: [:index, :show]
   resource :session, only: [:new, :create, :destroy]
   resource :membership, only: [:delete]
-  resources :styles
+  resources :styles do
+    get 'about', on: :collection
+  end
   resources :breweries do
     post 'toggle_activity', on: :member
   end
   resources :users do
     post 'toggle_account', on: :member
+    get 'recommendations', on: :member
   end
   resources :memberships do
     post 'confirm', on: :member
   end
+
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -35,4 +40,5 @@ Rails.application.routes.draw do
   post 'places', to: 'places#search'
   delete 'membership', to: 'memberships#destroy'
   get 'beerlist', to:'beers#list'
+  get 'calculator', to: "misc#calculator"
 end

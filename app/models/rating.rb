@@ -9,4 +9,5 @@ class Rating < ApplicationRecord
   def to_s
     "#{beer.name} #{score} #{created_at}"
   end
+
 end

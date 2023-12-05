@@ -1,21 +1,37 @@
 class BeersController < ApplicationController
+  PAGE_SIZE = 20
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :set_beer, only: %i[show edit update destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
 
   # GET /beers or /beers.json
   def index
-    @beers = Beer.all
+    @order = params[:order] || 'name'
+    @page = params[:page]&.to_i || 1
+    @last_page = (Beer.count / PAGE_SIZE).ceil
+    offset = (@page - 1) * PAGE_SIZE
 
-    order = params[:order] || 'name'
+    @beers = case @order
+             when "name"    then Beer.order(:name)
+                                     .limit(PAGE_SIZE).offset(offset)
+             when "brewery" then Beer.joins(:brewery)
+                                     .order("breweries.name").limit(PAGE_SIZE).offset(offset)
+             when "style"   then Beer.joins(:style)
+                                     .order("styles.name").limit(PAGE_SIZE).offset(offset)
+             when "rating"  then Beer.left_joins(:ratings)
+                                     .select("beers.*, avg(ratings.score)")
+                                     .group("beers.id")
+                                     .order("avg(ratings.score) DESC").limit(PAGE_SIZE).offset(offset)
+    end
 
-    @beers = case order
-             when "name" then @beers.sort_by(&:name)
-             when "brewery" then @beers.sort_by { |b| b.brewery.name }
-             when "style" then @beers.sort_by { |b| b.style.name }
-             when "rating" then @beers.sort_by(&:average_rating).reverse
-             end
-  end
+    if turbo_frame_request?
+      render partial: "beer_list", locals: { beers: @beers, page: @page, last_page: @last_page, order: @order }
+    else
+      render :index
+    end
+
+    end
+
 
   # GET /beers/1 or /beers/1.json
   def show

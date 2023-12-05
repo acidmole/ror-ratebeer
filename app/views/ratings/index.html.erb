@@ -95,3 +95,20 @@
     </div>
   </div>
 </div>
+
+<div>
+  järjestys on <%= @order %> <br>
+  epäjärjestys on <%= @pekka %> <br>
+  <%= link_to "Reverse order ", ratings_path(order: !@order, page: @page) %>
+  <% unless @page == 1 %>
+    <%= link_to "<<< Previous page", ratings_path(page: @page - 1), order: @order %>
+  <% end %>
+  <% unless @page == @last_page %>
+    <%= link_to "Next page >>>", ratings_path(page: @page + 1, order: @order) %>
+  <% end %>
+  <ul>
+    <%  @listed_ratings.each do |rating| %>
+      <li><%= rating.beer.name %> got <%= rating.score %> points from <%= rating.user.username %> <%= rating.created_at %></li>
+    <% end %>
+  </ul>
+</div>

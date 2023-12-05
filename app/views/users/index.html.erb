@@ -3,7 +3,7 @@
 <h1>Users</h1>
 
 <div id="users">
-  <% @users.each do |user| %>
+    <% @users.each do |user| %>
     <%= render user %>
 
     <p style="color: red">
@@ -19,12 +19,13 @@
         <li><%= beer_club.name %></li>
       </ul>
     <% end %>
-    
+
+
     <p>
       <%= link_to "Show this user", user %>
     </p>
-  <hr>
-  <% end %>
+    <hr>
+    <% end %>
 </div>
 
 <%= link_to "New user", new_user_path %>

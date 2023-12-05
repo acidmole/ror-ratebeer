@@ -6,7 +6,14 @@ class StylesController < ApplicationController
     @styles = Style.all
   end
 
+  def about
+    render partial: 'about'
+  end
+
   def show
+    if turbo_frame_request?
+      render partial: 'details', locals: { style: @style }
+    end
     @style = set_style
     @beers = @style.beers
   end

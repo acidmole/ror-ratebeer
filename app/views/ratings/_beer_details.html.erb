@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "beer_details" do %>
+  <h3><%= @rating.beer.name %></h3>
+  <p>
+    <%= @rating.beer.style.name %>
+  </p>
+
+  <p>
+    brewed by <%= @rating.beer.brewery.name %>
+  </p>
+
+  <p>
+    <%= @rating.created_at.to_date %>
+  </p>
+
+<% end %>

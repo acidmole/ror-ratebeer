@@ -1,0 +1,41 @@
+<h2>Beer tax calculator</h2>
+
+<div data-controller="calculator" data-calculator-vat-value="<%= @vat %>" class="container">
+  <form data-action="calculator#calculate">
+    <div class="amount">
+      <label>Amount</label>
+      <select data-calculator-target="amount" data-action="calculator#change">
+        <option value="0.33">0,33</option>
+        <option value="0.375">0,375</option>
+        <option value="0.5">0,5</option>
+        <option value="0.66">0,66</option>
+        <option value="0.75">0,75</option>
+        <option value="1">1</option>
+        <option value="1.3">1,3</option>
+        <option value="1.5">1,5</option>
+        <option value="-1">Custom</option>
+      </select>
+      <input id="custom-amount" style="display: none;" type=number min="0" step="0.01" value="0.00" required="true" data-calculator-target="customAmount" />
+      <label>liters</label>
+    </div>
+    <div>
+      <label>Alcohol by volume (ABV)</label>
+      <input type="number" min="0" step="0.01" value="0.00" required="true" data-calculator-target="abv" />
+      <label>%</label>
+    </div>
+    <div>
+      <label>Price </label>
+      <input type="number" min="0" step="0.01" value="0.00" required="true" data-calculator-target="price" />
+      <label>€</label>
+    </div>
+    <div>
+      <p>Value added tax <%= @vat * 100 %>%</p>
+    </div>
+    </br>
+    <button>Calculate</button>
+    <button data-action="calculator#reset">Reset</button>
+  </form>
+  </br>
+  <div id="result">
+  </div>
+</div>

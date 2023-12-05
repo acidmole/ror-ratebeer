@@ -59,18 +59,20 @@
   <% end %>
 <% end %>
 
-<h2>Given ratings</h2>
-<p>
-  <ul>
-    <% @user.ratings.each do |rating| %>
-      <li><%= "#{rating.to_s}" %>
-        <% if @user == current_user %>
-          <%= link_to "Delete", rating, data: { turbo_method: :delete } %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-</p>
+<div id="user">
+  <%= turbo_frame_tag "user" do %>
+    <h2>Given ratings</h2>
+    <p>
+      <%= render partial: 'ratings' %>
+    </p>
+  <% end %>
+</div>
+
+<%= turbo_frame_tag "beer_details" do %>
+  <p>
+
+  </p>
+<% end %>
 
   <div>
     <%= edit_and_destroy_buttons(@user) %>
